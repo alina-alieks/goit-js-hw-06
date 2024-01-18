@@ -1,20 +1,33 @@
 "use strict"
 
-function getElementWidth(content, padding, border) {
-    //2 ways resolving the task
-    //1-st
-    const boxSizing = Number.parseFloat(content) + 2 * Number.parseFloat(padding) + 2 * Number.parseFloat(border);
-    
-    //2-d
-    // content = Number.parseFloat(content);
-    // padding = Number.parseFloat(padding);
-    // border = Number.parseFloat(border);
-    // const boxSizing = content + 2 * padding + 2 * border;
+class StringBuilder {
+    #value;
 
-    return boxSizing;
-
+    constructor(initialValue) {
+        this.#value = initialValue;
+    }
+    getValue() {
+        return this.#value;
+    }
+    padEnd(str) {
+        this.#value += str;
+    }
+    padStart(str) {
+        this.#value = str + this.#value;
+    }
+    padBoth(str) {
+        this.padStart(str);
+        this.padEnd(str);
+    }
 }
 
-console.log(getElementWidth("50px", "8px", "4px")); // 74
-console.log(getElementWidth("60px", "12px", "8.5px")); // 101
-console.log(getElementWidth("200px", "0px", "0px")); // 200
+
+const builder = new StringBuilder(".");
+console.log(builder.getValue()); // "."
+builder.padStart("^");
+console.log(builder.getValue()); // "^."
+builder.padEnd("^");
+console.log(builder.getValue()); // "^.^"
+builder.padBoth("=");
+console.log(builder.getValue()); // "=^.^="
+
